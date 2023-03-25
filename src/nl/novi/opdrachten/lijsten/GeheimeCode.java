@@ -1,7 +1,6 @@
 package nl.novi.opdrachten.lijsten;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class GeheimeCode {
 
@@ -14,6 +13,13 @@ public class GeheimeCode {
         laResistanceMembers = addMembers(laResistanceMembers, "Henrie");
         laResistanceMembers = addMembers(laResistanceMembers, "Piet");
         laResistanceMembers = addMembers(laResistanceMembers, "LeDroitCestMoi");
+
+        // check
+
+        laResistanceMembers = addMembers(laResistanceMembers, "LeDroitCestMoi");
+        System.out.println(laResistanceMembers);
+
+        System.out.println(encryptName(laResistanceMembers.toString()));
 
         /*
         Opdracht 1: Hierboven zijn via de methode addMembers, leden aan de lijst toegevoegd. Pas de Methode zo aan dat
@@ -35,9 +41,42 @@ public class GeheimeCode {
         Schrijf een methode die de versleutelde lijst kan omzetten naar de ontsleutelde lijst.
          */
     }
+    private static String encryptName(String name) {
+        StringBuilder encryptedNameBuilder = new StringBuilder();
+        for (int i = 0; i < name.length(); i++) {
+            String number = charToNumber(name.charAt(i));
+            encryptedNameBuilder.append(number);
+            if(i < name.length() - 1) {
+                encryptedNameBuilder.append("-");
+            }
+        }
+        return encryptedNameBuilder.toString();
+    }
+    private static String charToNumber(char ch) {
+        char tempchar = Character.toLowerCase(ch);
+        int number = tempchar - 'a' + 1;
+
+        if(Character.isUpperCase(ch)) {
+            number = number + 100;
+        }
+        return Integer.toString(number);
+    }
+
 
     private static List<String> addMembers(List<String> members, String name) {
-        members.add(name);
+        boolean isUnique = true;
+        for(String member : members) {
+            if (name.equalsIgnoreCase(member)) {
+                isUnique = false;
+                break;
+            }
+        }
+        if(isUnique) {
+            members.add(name);
+        }
         return members;
+    }
+
+    private static class list<T> {
     }
 }
